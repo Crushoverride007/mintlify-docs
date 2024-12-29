@@ -70,6 +70,12 @@
       ]
     },
     {
+      "group": "First Folder",
+      "pages": [
+        "first/subfolder"
+      ]
+    },
+    {
       "group": "API Documentation",
       "pages": [
         "api-reference/introduction"
