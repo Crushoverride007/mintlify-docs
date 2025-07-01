@@ -36,12 +36,7 @@
     },
     {
       "name": "API Documentation",
-      "url": "api-reference/introduction",
-      "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
-      ]
+      "url": "api-reference/introduction/endpoint"
     }
   ],
   "navigation": [
