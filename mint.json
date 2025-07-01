@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "Kort Documentation labs",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
@@ -17,7 +17,7 @@
   },
   "topbarLinks": [
     {
-      "name": "Support",
+      "name": "E-Mail",
       "url": "mailto:admin@kortlabs.xyz"
     }
   ],
@@ -33,12 +33,12 @@
   ],
   "navigation": [
     {
-      "group": "Get Started",
+      "group": "Main Hub",
       "pages": [
         "introduction",
         "quickstart",
         "development",
-        "first"
+        "hetzner"
       ]
     },
     {
@@ -53,9 +53,9 @@
       ]
     },
     {
-      "group": "First Folder",
+      "group": "Hetzner Hosting",
       "pages": [
-        "first/subfolder"
+        "project-hetzner/hetzner"
       ]
     },
     {
