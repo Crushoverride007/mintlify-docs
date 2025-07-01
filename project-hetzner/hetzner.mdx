@@ -8,7 +8,7 @@ description: "Overview of hetzner hosting "
 
 Hetzner serves as the backbone of my offsite infrastructure, providing reliable, cost-effective dedicated servers and cloud resources that complement my local home lab environment. This page documents my Hetzner setup, configurations, and how these remote resources integrate with my on-premises systems.
 
-**Infrastructure Components**
+## **Infrastructure Components**
 
 **Dedicated Servers**
 
@@ -17,7 +17,7 @@ Hetzner serves as the backbone of my offsite infrastructure, providing reliable,
 | AX41-NVMe | AMD Ryzen 5 3600, 64GB RAM, 2x512GB NVMe    | Kubernetes Cluster | Helsinki  |
 | EX42-SSD  | Intel Xeon E3-1270v6, 32GB RAM, 2x512GB SSD | Database & Storage | Nuremberg |
 
-**Cloud Instances**
+## **Cloud Instances**
 
 | Instance | Specifications              | Primary Function     | Location    |
 | :------- | :-------------------------- | :------------------- | :---------- |
@@ -25,14 +25,14 @@ Hetzner serves as the backbone of my offsite infrastructure, providing reliable,
 | CPX31    | 4 vCPU, 8GB RAM, 80GB SSD   | CI/CD Runner         | Helsinki    |
 | CX41     | 4 vCPU, 16GB RAM, 160GB SSD | Monitoring & Logging | Nuremberg   |
 
-**Storage Boxes**
+## **Storage Boxes**
 
 | Storage | Size | Primary Function | Backup Schedule                |
 | :------ | :--- | :--------------- | :----------------------------- |
 | BX20    | 2TB  | Off-site Backups | Daily Incremental, Weekly Full |
 | BX40    | 4TB  | Media Archive    | Monthly Archive                |
 
-**Network Configuration**
+## **Network Configuration**
 
 **Private Network**
 
@@ -160,7 +160,7 @@ Comprehensive DR strategy for Hetzner-hosted services:
 
 	•	**Instance Sizing**: Right-sizing instances saved approximately 30% on costs
 
-**Future Plans**
+## **Future Plans**
 
 	•	Explore Hetzner's Arm-based instances for cost optimization
 
