@@ -1,5 +1,307 @@
 ---
-title: 'New file'
-description: 'Description of your new file.'
+title: "Powering My Virtual Machine Infrastructure"
+description: "VM infra"
 ---
 
+**Overview**
+
+This page details the configuration and management of four specialized virtual machines that form a critical part of my home lab infrastructure. Each VM serves a specific purpose: Coolify for application deployment, Dokploy for container orchestration, a Spotify API service, and MinIO for S3-compatible object storage.
+
+**Infrastructure Architecture**
+
+**Virtualization Platform**
+
+All VMs run on a ProxMox hypervisor with the following host specifications:
+
+| Component | Specification                                      |
+| :-------- | :------------------------------------------------- |
+| CPU       | AMD Ryzen 9 5900X (12 cores/24 threads)            |
+| RAM       | 64GB DDR4-3600 ECC                                 |
+| Storage   | 2TB NVMe (VM storage) \+ 8TB RAID10 (data storage) |
+| Network   | 2.5GbE primary \+ 1GbE management                  |
+| Power     | 650W PSU with UPS backup                           |
+
+**Resource Allocation**
+
+| VM          | CPU Cores | RAM  | Storage   | Network | Purpose                         |
+| :---------- | :-------- | :--- | :-------- | :------ | :------------------------------ |
+| Coolify     | 4 vCPU    | 8GB  | 120GB SSD | VLAN 10 | Application deployment platform |
+| Dokploy     | 4 vCPU    | 8GB  | 80GB SSD  | VLAN 10 | Container orchestration         |
+| Spotify API | 2 vCPU    | 4GB  | 40GB SSD  | VLAN 20 | Music streaming API services    |
+| MinIO       | 4 vCPU    | 16GB | 500GB SSD | VLAN 30 | S3-compatible object storage    |
+
+**VM Configurations**
+
+**Coolify VM**
+
+[<u>Coolify</u>](https://coolify.io/) provides a self-hosted Heroku/Netlify alternative for application deployment:
+
+# Coolify Configuration
+
+hostname: coolify.homelab.local
+
+ip: 192.168.10.10/24
+
+os: Ubuntu Server 22.04 LTS
+
+container_runtime: Docker
+
+persistent_volumes:
+
+  - /data/coolify/database:/data/database
+
+  - /data/coolify/applications:/data/applications
+
+exposed_ports:
+
+  - 80:80
+
+  - 443:443
+
+  - 3000:3000
+
+**Key Features:**
+
+•	One-click deployments from Git repositories
+
+•	Built-in CI/CD pipeline
+
+•	Support for various frameworks and languages
+
+•	Automatic SSL certificate management
+
+•	Resource monitoring and scaling
+
+**Dokploy VM**
+
+Dokploy serves as a lightweight container orchestration platform:
+
+# Dokploy Configuration
+
+hostname: dokploy.homelab.local
+
+ip: 192.168.10.11/24
+
+os: Debian 12
+
+container_runtime: Docker \+ Docker Compose
+
+persistent_volumes:
+
+  - /data/dokploy/config:/app/config
+
+  - /data/dokploy/data:/app/data
+
+exposed_ports:
+
+  - 8080:8080
+
+  - 9000:9000
+
+**Key Features:**
+
+•	Web-based container management interface
+
+•	Template-based deployment
+
+•	Resource usage monitoring
+
+•	Automated container updates
+
+•	Integration with Git repositories
+
+**Spotify API VM**
+
+Custom service for interacting with Spotify's API and local music collection:
+
+# Spotify API Configuration
+
+hostname: spotify-api.homelab.local
+
+ip: 192.168.20.10/24
+
+os: Alpine Linux 3.18
+
+container_runtime: Docker
+
+persistent_volumes:
+
+  - /data/spotify/cache:/app/cache
+
+  - /data/spotify/config:/app/config
+
+exposed_ports:
+
+  - 3001:3001
+
+  - 3002:3002
+
+**Key Features:**
+
+•	Authentication proxy for Spotify API
+
+•	Local music library integration
+
+•	Playlist synchronization
+
+•	Music recommendation engine
+
+•	Usage statistics and analytics
+
+**MinIO VM**
+
+[<u>MinIO</u>](https://min.io/) provides S3-compatible object storage:
+
+# MinIO Configuration
+
+hostname: minio.homelab.local
+
+ip: 192.168.30.10/24
+
+os: Ubuntu Server 22.04 LTS
+
+container_runtime: Docker
+
+persistent_volumes:
+
+  - /data/minio/data:/data
+
+  - /data/minio/config:/root/.minio
+
+exposed_ports:
+
+  - 9000:9000
+
+  - 9001:9001
+
+**Key Features:**
+
+•	S3-compatible API
+
+•	Web-based administration console
+
+•	Bucket policies and access controls
+
+•	Versioning and object locking
+
+•	Encryption at rest and in transit
+
+**Network Configuration**
+
+**VLAN Segmentation**
+
+VMs are organized into separate VLANs based on function:
+
+| VLAN ID | Purpose                    | Subnet          | Gateway      |
+| :------ | :------------------------- | :-------------- | :----------- |
+| 10      | Application Infrastructure | 192.168.10.0/24 | 192.168.10.1 |
+| 20      | Media Services             | 192.168.20.0/24 | 192.168.20.1 |
+| 30      | Storage Services           | 192.168.30.0/24 | 192.168.30.1 |
+
+**Firewall Rules**
+
+Tailored firewall policies for each VM:
+
+•	Coolify: Allow inbound 80/443 from LAN and WAN (via reverse proxy)
+
+•	Dokploy: Allow inbound 8080/9000 from LAN only
+
+•	Spotify API: Allow inbound 3001/3002 from LAN only
+
+•	MinIO: Allow inbound 9000/9001 from application VLAN only
+
+**Backup Strategy**
+
+| VM          | Backup Method                          | Schedule | Retention                    |
+| :---------- | :------------------------------------- | :------- | :--------------------------- |
+| Coolify     | ProxMox backup \+ application data     | Daily    | 7 daily, 4 weekly            |
+| Dokploy     | ProxMox backup \+ configuration export | Daily    | 7 daily, 4 weekly            |
+| Spotify API | ProxMox backup                         | Weekly   | 4 weekly                     |
+| MinIO       | ProxMox backup \+ S3 replication       | Daily    | 7 daily, 4 weekly, 3 monthly |
+
+**Monitoring & Maintenance**
+
+**System Monitoring**
+
+•	Prometheus metrics collection from all VMs
+
+•	Node Exporter for system metrics
+
+•	cAdvisor for container metrics
+
+•	Grafana dashboards for visualization
+
+•	Alertmanager for notifications
+
+**Maintenance Procedures**
+
+•	Weekly updates scheduled during maintenance window
+
+•	Monthly security audits
+
+•	Quarterly performance reviews
+
+•	Automated health checks with notification alerts
+
+**Integration Points**
+
+**Cross-VM Workflows**
+
+graph TD
+
+    A[Git Repository] --\> B[Coolify]
+
+    B --\> C[Container Deployment]
+
+    C --\> D[Dokploy]
+
+    D --\> E[Application Running]
+
+    E --\> F[MinIO]
+
+    G[User] --\> H[Spotify API]
+
+    H --\> F
+
+**Authentication**
+
+Centralized authentication using Keycloak:
+
+•	Single sign-on across all services
+
+•	Role-based access control
+
+•	Multi-factor authentication
+
+•	Audit logging
+
+**Performance Optimization**
+
+| VM          | Optimization    | Benefit                      |
+| :---------- | :-------------- | :--------------------------- |
+| Coolify     | ZFS compression | 30% storage savings          |
+| Dokploy     | CPU pinning     | Reduced latency              |
+| Spotify API | Memory limits   | Prevents resource contention |
+| MinIO       | Dedicated NVMe  | Improved I/O performance     |
+
+**Lessons Learned**
+
+•	**Resource Allocation**: Coolify benefits significantly from additional RAM
+
+•	**Storage Performance**: MinIO requires fast storage for optimal performance
+
+•	**Network Isolation**: VLAN segmentation improves security posture
+
+•	**Backup Strategy**: Application-aware backups are essential for stateful services
+
+**Future Enhancements**
+
+•	Migrate to container-native virtualization with Kubernetes
+
+•	Implement GitOps workflow for infrastructure management
+
+•	Explore clustering options for MinIO
+
+•	Add redundancy for critical services
+
+_Last updated: July 1, 2025_
