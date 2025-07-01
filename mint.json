@@ -21,10 +21,6 @@
       "url": "mailto:admin@kortlabs.xyz"
     }
   ],
-  "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
-  },
   "tabs": [
     {
       "name": "API Reference",
@@ -35,6 +31,12 @@
     {
       "name": "Hetzner",
       "url": "project-hetzner"
+    }
+  ],
+  "tabs": [
+    {
+      "name": "vms",
+      "url": "vms"
     }
   ],
   "navigation": [
