@@ -36,8 +36,6 @@
       "group": "Main Hub",
       "pages": [
         "introduction",
-        "quickstart",
-        "development",
         "hetzner"
       ]
     },
