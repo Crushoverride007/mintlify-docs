@@ -1,0 +1,137 @@
+---
+title: "Cloudflare"
+description: "Overview"
+---
+
+Cloudflare serves as a critical component in my home lab infrastructure, providing DNS management, security features, and enabling remote access to self-hosted services. This page documents my Cloudflare setup, configurations, and how it integrates with other systems in my lab environment.
+
+**Key Services**
+
+**DNS Management**
+
+Cloudflare handles all DNS records for my domains, offering:
+
+	•	Centralized management of multiple domains
+
+	•	API access for automated DNS updates
+
+	•	DNSSEC implementation for enhanced security
+
+	•	Split-horizon DNS for internal/external resolution
+
+**Cloudflare Tunnel**
+
+Cloudflare Tunnel (formerly Argo Tunnel) provides secure access to internal services without opening ports:
+
+| Service        | Internal Address   | External Access                                              | Authentication     |
+| :------------- | :----------------- | :----------------------------------------------------------- | :----------------- |
+| Home Dashboard | 192.168.1.10:80    | [<u>dashboard.example.com</u>](http://dashboard.example.com) | CF Access          |
+| Media Server   | 192.168.1.20:32400 | [<u>media.example.com</u>](http://media.example.com)         | CF Access \+ Plex  |
+| Git Server     | 192.168.1.30:3000  | [<u>git.example.com</u>](http://git.example.com)             | CF Access \+ OAuth |
+| Monitoring     | 192.168.1.40:3000  | [<u>metrics.example.com</u>](http://metrics.example.com)     | CF Access          |
+
+**Cloudflare Access**
+
+Implementing zero-trust access control for all exposed services:
+
+	•	Single sign-on integration with authentication providers
+
+	•	Per-service access policies
+
+	•	Device posture checking
+
+	•	Detailed access logs for security monitoring
+
+**Implementation Details**
+
+**Cloudflared Setup**
+
+Running cloudflared as a Docker container for tunnel connectivity:
+
+version: '3'
+
+services:
+
+  cloudflared:
+
+    container_name: cloudflared
+
+    image: cloudflare/cloudflared:latest
+
+    restart: unless-stopped
+
+    command: tunnel run
+
+    environment:
+
+      - TUNNEL_TOKEN=\${CLOUDFLARE_TUNNEL_TOKEN}
+
+    volumes:
+
+      - ./config:/etc/cloudflared
+
+**DNS Configuration**
+
+Example DNS records structure:
+
+| Type  | Name      | Value                                                                               | Proxy Status |
+| :---- | :-------- | :---------------------------------------------------------------------------------- | :----------- |
+| A     | @         | 192.0.2.1                                                                           | Proxied      |
+| CNAME | dashboard | [<u>tunnel.example.com</u>](http://tunnel.example.com)                              | Proxied      |
+| CNAME | media     | [<u>tunnel.example.com</u>](http://tunnel.example.com)                              | Proxied      |
+| CNAME | git       | [<u>tunnel.example.com</u>](http://tunnel.example.com)                              | Proxied      |
+| TXT   | \_dmarc   | v=DMARC1; p=reject; rua=[<u>mailto:dmarc@example.com</u>](mailto:dmarc@example.com) | DNS Only     |
+
+**Automation**
+
+Leveraging Cloudflare's API for infrastructure automation:
+
+	•	Dynamic DNS updates via custom scripts
+
+	•	Terraform management of DNS records and page rules
+
+	•	CI/CD pipeline integration for automatic DNS updates
+
+**Security Considerations**
+
+	•	All traffic encrypted end-to-end through Cloudflare Tunnel
+
+	•	WAF (Web Application Firewall) rules to protect exposed services
+
+	•	Rate limiting to prevent brute force attacks
+
+	•	Regular audit of access logs and security events
+
+	•	Rotating tunnel credentials on a scheduled basis
+
+**Monitoring and Maintenance**
+
+	•	Healthchecks for tunnel connectivity
+
+	•	Automated alerts for certificate expiration
+
+	•	Dashboard for visualizing traffic patterns and blocked threats
+
+	•	Regular updates to cloudflared client
+
+**Lessons Learned**
+
+	•	**Tunnel Reliability**: Running multiple tunnels provides redundancy
+
+	•	**Configuration Management**: Storing tunnel configurations in version control
+
+	•	**Access Policies**: Starting with strict policies and relaxing as needed
+
+	•	**API Integration**: Leveraging the API for automation saves significant time
+
+**Future Enhancements**
+
+	•	Implement Cloudflare Teams for enhanced device management
+
+	•	Explore Cloudflare Workers for edge computing capabilities
+
+	•	Set up Cloudflare R2 for object storage integration
+
+	•	Test Cloudflare for SaaS for additional application protection
+
+_Last updated: July 1, 2025_

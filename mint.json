@@ -46,6 +46,12 @@
       ]
     },
     {
+      "group": "Cloudflare",
+      "pages": [
+        "cloudflare/cloudflare"
+      ]
+    },
+    {
       "group": "API Documentation",
       "pages": [
         "api-reference/introduction"
