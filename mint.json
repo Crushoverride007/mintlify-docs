@@ -27,11 +27,11 @@
       "url": "project-hetzner"
     },
     {
-      "name": "vms",
+      "name": "Virtual Machines",
       "url": "vms"
     },
     {
-      "name": "cloudflare",
+      "name": "Cloudflare",
       "url": "cloudflare"
     }
   ],
