@@ -1,88 +1,173 @@
 ---
-title: "Hetzner Blud"
-description: "Text, title, and styling in standard markdown"
+title: "Hetzner"
 icon: "text-size"
+description: "Overview of hetzner hosting "
 ---
 
-## Titles
+**Overview**
 
-Best used for section headers.
+Hetzner serves as the backbone of my offsite infrastructure, providing reliable, cost-effective dedicated servers and cloud resources that complement my local home lab environment. This page documents my Hetzner setup, configurations, and how these remote resources integrate with my on-premises systems.
 
-```md
-## Titles
-```
+**Infrastructure Components**
 
-### Subtitles
+**Dedicated Servers**
 
-Best use to subsection headers.
+| Server    | Specifications                              | Primary Function   | Location  |
+| :-------- | :------------------------------------------ | :----------------- | :-------- |
+| AX41-NVMe | AMD Ryzen 5 3600, 64GB RAM, 2x512GB NVMe    | Kubernetes Cluster | Helsinki  |
+| EX42-SSD  | Intel Xeon E3-1270v6, 32GB RAM, 2x512GB SSD | Database & Storage | Nuremberg |
 
-```md
-### Subtitles
-```
+**Cloud Instances**
 
-<Tip>
-  Each **title** and **subtitle** creates an anchor and also shows up on the table of contents on the right.
-</Tip>
+| Instance | Specifications              | Primary Function     | Location    |
+| :------- | :-------------------------- | :------------------- | :---------- |
+| CX21     | 2 vCPU, 4GB RAM, 40GB SSD   | VPN Gateway          | Falkenstein |
+| CPX31    | 4 vCPU, 8GB RAM, 80GB SSD   | CI/CD Runner         | Helsinki    |
+| CX41     | 4 vCPU, 16GB RAM, 160GB SSD | Monitoring & Logging | Nuremberg   |
 
-## Text Formatting
+**Storage Boxes**
 
-We support most markdown formatting. Simply add `**`, `_`, or `~` around text to format it.
+| Storage | Size | Primary Function | Backup Schedule                |
+| :------ | :--- | :--------------- | :----------------------------- |
+| BX20    | 2TB  | Off-site Backups | Daily Incremental, Weekly Full |
+| BX40    | 4TB  | Media Archive    | Monthly Archive                |
 
-| Style         | How to write it   | Result            |
-| ------------- | ----------------- | ----------------- |
-| Bold          | `**bold**`        | **bold**          |
-| Italic        | `_italic_`        | _italic_          |
-| Strikethrough | `~strikethrough~` | ~~strikethrough~~ |
+**Network Configuration**
 
-You can combine these. For example, write `**_bold and italic_**` to get **_bold and italic_** text.
+**Private Network**
 
-You need to use HTML to write superscript and subscript text. That is, add `<sup>` or `<sub>` around your text.
+Utilizing Hetzner's vSwitch for secure inter-server communication:
 
-| Text Size   | How to write it          | Result                 |
-| ----------- | ------------------------ | ---------------------- |
-| Superscript | `<sup>superscript</sup>` | <sup>superscript</sup> |
-| Subscript   | `<sub>subscript</sub>`   | <sub>subscript</sub>   |
+	•	10.0.0.0/24 subnet for dedicated servers
 
-## Linking to Pages
+	•	10.0.1.0/24 subnet for cloud instances
 
-You can add a link by wrapping text in `[]()`. You would write `[link to google](https://google.com)` to [link to google](https://google.com).
+	•	Internal firewall rules restricting traffic between segments
 
-Links to pages in your docs need to be root-relative. Basically, you should include the entire folder path. For example, `[link to text](/writing-content/text)` links to the page "Text" in our components section.
+**VPN Connectivity**
 
-Relative links like `[link to text](../text)` will open slower because we cannot optimize them as easily.
+Secure connection between home lab and Hetzner infrastructure:
 
-## Blockquotes
+	•	WireGuard VPN for site-to-site connectivity
 
-### Singleline
+	•	Failover configuration with multiple endpoints
 
-To create a blockquote, add a `>` in front of a paragraph.
+	•	Traffic encryption for all data in transit
 
-> Dorothy followed her through many of the beautiful rooms in her castle.
+	•	Split tunneling for optimized routing
 
-```md
-> Dorothy followed her through many of the beautiful rooms in her castle.
-```
+**Services & Applications**
 
-### Multiline
+**Kubernetes Cluster**
 
-> Dorothy followed her through many of the beautiful rooms in her castle.
->
-> The Witch bade her clean the pots and kettles and sweep the floor and keep the fire fed with wood.
+Running a production-grade Kubernetes cluster for containerized applications:
 
-```md
-> Dorothy followed her through many of the beautiful rooms in her castle.
->
-> The Witch bade her clean the pots and kettles and sweep the floor and keep the fire fed with wood.
-```
+	•	K3s lightweight distribution
 
-### LaTeX
+	•	Longhorn for distributed storage
 
-Mintlify supports [LaTeX](https://www.latex-project.org) through the Latex component.
+	•	MetalLB for load balancing
 
-<Latex>
-  8 x (vk x H1 - H2) = (0,1)
-</Latex>
+	•	Cert-Manager for certificate automation
 
-```md
-<Latex>8 x (vk x H1 - H2) = (0,1)</Latex>
-```
+**Backup Infrastructure**
+
+Comprehensive backup strategy leveraging Hetzner resources:
+
+	•	Restic for encrypted backups
+
+	•	Automated verification and integrity checks
+
+	•	Geographic redundancy across multiple datacenters
+
+	•	Immutable backups for ransomware protection
+
+**Monitoring & Observability**
+
+Centralized monitoring solution for both Hetzner and home lab resources:
+
+	•	Prometheus for metrics collection
+
+	•	Grafana for visualization
+
+	•	Loki for log aggregation
+
+	•	Alertmanager for notifications
+
+**Cost Optimization**
+
+Strategies implemented to maximize value from Hetzner resources:
+
+	•	Reserved instances for predictable workloads
+
+	•	Spot instances for batch processing jobs
+
+	•	Automation for scaling down during low-usage periods
+
+	•	Storage tiering based on access patterns
+
+| Resource          | Monthly Cost (MAD) | Optimization Strategy             |
+| :---------------- | :----------------- | :-------------------------------- |
+| Dedicated Servers | 1.050,00           | Long-term commitment discount     |
+| Cloud Instances   | 420,00             | Auto-scaling based on demand      |
+| Storage Boxes     | 210,00             | Lifecycle policies for older data |
+| Network Transfer  | 105,00             | Content caching at edge           |
+| **Total**         | **1.785,00**       | ~25% savings from initial setup   |
+
+**Deployment Workflow**
+
+Automated infrastructure provisioning and configuration:
+
+	1.	Infrastructure as Code using Terraform
+
+	2.	Configuration management with Ansible
+
+	3.	GitOps workflow with ArgoCD
+
+	4.	CI/CD pipeline integration with GitHub Actions
+
+graph LR
+
+    A[Git Repository] --\> B[GitHub Actions]
+
+    B --\> C[Terraform Apply]
+
+    C --\> D[Ansible Configuration]
+
+    D --\> E[ArgoCD Sync]
+
+    E --\> F[Hetzner Infrastructure]
+
+**Disaster Recovery**
+
+Comprehensive DR strategy for Hetzner-hosted services:
+
+	•	Regular disaster recovery testing
+
+	•	Documented recovery procedures
+
+	•	Automated infrastructure rebuilding
+
+	•	Cross-region replication for critical data
+
+**Lessons Learned**
+
+	•	**Network Performance**: Helsinki datacenter provides best connectivity to Morocco
+
+	•	**Storage Strategy**: Storage Boxes offer excellent value for backup purposes
+
+	•	**API Integration**: Hetzner's API enables comprehensive automation
+
+	•	**Instance Sizing**: Right-sizing instances saved approximately 30% on costs
+
+**Future Plans**
+
+	•	Explore Hetzner's Arm-based instances for cost optimization
+
+	•	Implement multi-region deployment for improved resilience
+
+	•	Test Hetzner Cloud's managed Kubernetes offering
+
+	•	Evaluate dedicated GPU servers for ML/AI workloads
+
+_Last updated: July 1, 2025_
