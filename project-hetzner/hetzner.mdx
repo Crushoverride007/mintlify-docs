@@ -10,14 +10,14 @@ Hetzner serves as the backbone of my offsite infrastructure, providing reliable,
 
 ## **Infrastructure Components**
 
-**Dedicated Servers**
+### **Dedicated Servers**
 
 | Server    | Specifications                              | Primary Function   | Location  |
 | :-------- | :------------------------------------------ | :----------------- | :-------- |
 | AX41-NVMe | AMD Ryzen 5 3600, 64GB RAM, 2x512GB NVMe    | Kubernetes Cluster | Helsinki  |
 | EX42-SSD  | Intel Xeon E3-1270v6, 32GB RAM, 2x512GB SSD | Database & Storage | Nuremberg |
 
-## **Cloud Instances**
+### **Cloud Instances**
 
 | Instance | Specifications              | Primary Function     | Location    |
 | :------- | :-------------------------- | :------------------- | :---------- |
@@ -34,7 +34,7 @@ Hetzner serves as the backbone of my offsite infrastructure, providing reliable,
 
 ## **Network Configuration**
 
-**Private Network**
+### **Private Network**
 
 Utilizing Hetzner's vSwitch for secure inter-server communication:
 
@@ -44,7 +44,7 @@ Utilizing Hetzner's vSwitch for secure inter-server communication:
 
 	•	Internal firewall rules restricting traffic between segments
 
-**VPN Connectivity**
+### **VPN Connectivity**
 
 Secure connection between home lab and Hetzner infrastructure:
 
@@ -56,9 +56,9 @@ Secure connection between home lab and Hetzner infrastructure:
 
 	•	Split tunneling for optimized routing
 
-**Services & Applications**
+### **Services & Applications**
 
-**Kubernetes Cluster**
+### **Kubernetes Cluster**
 
 Running a production-grade Kubernetes cluster for containerized applications:
 
@@ -70,7 +70,7 @@ Running a production-grade Kubernetes cluster for containerized applications:
 
 	•	Cert-Manager for certificate automation
 
-**Backup Infrastructure**
+### **Backup Infrastructure**
 
 Comprehensive backup strategy leveraging Hetzner resources:
 
@@ -82,7 +82,7 @@ Comprehensive backup strategy leveraging Hetzner resources:
 
 	•	Immutable backups for ransomware protection
 
-**Monitoring & Observability**
+### **Monitoring & Observability**
 
 Centralized monitoring solution for both Hetzner and home lab resources:
 
@@ -94,7 +94,7 @@ Centralized monitoring solution for both Hetzner and home lab resources:
 
 	•	Alertmanager for notifications
 
-**Cost Optimization**
+#### **Cost Optimization**
 
 Strategies implemented to maximize value from Hetzner resources:
 
@@ -114,7 +114,7 @@ Strategies implemented to maximize value from Hetzner resources:
 | Network Transfer  | 105,00             | Content caching at edge           |
 | **Total**         | **1.785,00**       | ~25% savings from initial setup   |
 
-**Deployment Workflow**
+### **Deployment Workflow**
 
 Automated infrastructure provisioning and configuration:
 
@@ -138,7 +138,7 @@ graph LR
 
     E --\> F[Hetzner Infrastructure]
 
-**Disaster Recovery**
+### **Disaster Recovery**
 
 Comprehensive DR strategy for Hetzner-hosted services:
 
@@ -150,7 +150,7 @@ Comprehensive DR strategy for Hetzner-hosted services:
 
 	•	Cross-region replication for critical data
 
-**Lessons Learned**
+### **Lessons Learned**
 
 	•	**Network Performance**: Helsinki datacenter provides best connectivity to Morocco
 
