@@ -1,61 +1,109 @@
----
-title: "Introduction"
-description: "Welcome to the home of your new documentation"
-icon: "code"
----
+# Accordions
 
-**My Journey**
+> A dropdown component to toggle content visibility
 
-My home lab journey began with a simple curiosity: what happens when you take control of your digital infrastructure? What started as a single repurposed computer has evolved into a comprehensive environment where I can explore new technologies, automate my home, and develop practical skills that translate to real-world applications.
+<Accordion title="I am an Accordion.">
+  You can put any content in here, including other components, like code:
 
-**Why Build a Home Lab?**
+  ```java HelloWorld.java
+   class HelloWorld {
+       public static void main(String[] args) {
+           System.out.println("Hello, World!");
+       }
+   }
+  ```
+</Accordion>
 
-Building a home lab offers numerous benefits:
+<RequestExample>
+  ````mdx Accordion Example
+  <Accordion title="I am an Accordion.">
+    You can put any content in here, including other components, like code:
 
-	•	**Learning without consequences**: Experiment freely without risking production systems
+     ```java HelloWorld.java
+      class HelloWorld {
+          public static void main(String[] args) {
+              System.out.println("Hello, World!");
+          }
+      }
+    ```
+  </Accordion>
+  ````
 
-	•	**Skill development**: Gain practical experience with enterprise technologies
+  ````mdx Accordion Group Example
+  <AccordionGroup>
+    <Accordion title="FAQ without Icon">
+      You can put other components inside Accordions.
 
-	•	**Self-reliance**: Reduce dependence on third-party services
+      ```java HelloWorld.java
+      class HelloWorld {
+          public static void main(String[] args) {
+              System.out.println("Hello, World!");
+          }
+      }
+      ```
 
-	•	**Privacy control**: Maintain ownership of your data
+      Check out the [Accordion](/components/accordions) docs for all the supported props.
+    </Accordion>
 
-	•	**Cost savings**: Long-term reduction in subscription costs
+    <Accordion title="FAQ with Icon" icon="alien-8bit">
+      Check out the [Accordion](/components/accordions) docs for all the supported props.
+    </Accordion>
 
-	•	**Customization**: Create solutions tailored exactly to your needs
+    <Accordion title="FAQ without Icon">
+      Check out the [Accordion](/components/accordions) docs for all the supported props.
+    </Accordion>
+  </AccordionGroup>
+  ````
+</RequestExample>
 
-**Philosophy**
+### Props
 
-My home lab is built on several core principles:
+<ResponseField name="title" type="string" required>
+  Title in the Accordion preview.
+</ResponseField>
 
-	1.	**Continuous learning** - The lab evolves as I learn new concepts and technologies
+<ResponseField name="description" type="string">
+  Detail below the title in the Accordion preview.
+</ResponseField>
 
-	2.	**Documentation** - Thorough documentation ensures reproducibility and knowledge retention
+<ResponseField name="defaultOpen" type="boolean" default="false">
+  Whether the Accordion is open by default.
+</ResponseField>
 
-	3.	**Automation** - Repetitive tasks should be automated whenever possible
+<ResponseField name="icon" type="string or svg">
+  A [Font Awesome icon](https://fontawesome.com/icons), [Lucide
+  icon](https://lucide.dev/icons), or SVG code
+</ResponseField>
 
-	4.	**Resilience** - Systems should be designed to recover gracefully from failures
+<ResponseField name="iconType" type="string">
+  One of "regular", "solid", "light", "thin", "sharp-solid", "duotone", or
+  "brands"
+</ResponseField>
 
-	5.	**Efficiency** - Resources should be used optimally, both in terms of computing power and energy consumption
+## Accordion Groups
 
-**Lab Goals**
+You can group multiple accordions into a single display. Simply add `<AccordionGroup>` around your existing `<Accordion>` components.
 
-Through this home lab, I aim to:
+<AccordionGroup>
+  <Accordion title="FAQ without Icon">
+    You can put other components inside Accordions.
 
-	•	Master infrastructure as code and configuration management
+    ```java HelloWorld.java
+    class HelloWorld {
+        public static void main(String[] args) {
+            System.out.println("Hello, World!");
+        }
+    }
+    ```
 
-	•	Build a comprehensive home automation system
+    Check out the [Accordion](/components/accordions) docs for all the supported props.
+  </Accordion>
 
-	•	Create a reliable personal cloud environment
+  <Accordion title="FAQ with Icon" icon="bot">
+    Check out the [Accordion](/components/accordions) docs for all the supported props.
+  </Accordion>
 
-	•	Develop practical networking and security skills
-
-	•	Experiment with emerging technologies in a controlled environment
-
-**Getting Started**
-
-This site documents my setup, configurations, challenges, and solutions. Whether you're a fellow enthusiast looking for ideas or a newcomer curious about home labs, I hope my experiences provide useful insights for your own journey.
-
-Explore the various sections to learn about my hardware setup, network architecture, self-hosted services, and ongoing projects. Each area includes detailed documentation, lessons learned, and future plans.
-
-_The best way to predict the future is to create it._
+  <Accordion title="FAQ without Icon">
+    Check out the [Accordion](/components/accordions) docs for all the supported props.
+  </Accordion>
+</AccordionGroup>

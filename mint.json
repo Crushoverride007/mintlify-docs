@@ -33,6 +33,10 @@
     {
       "name": "Cloudflare",
       "url": "cloudflare"
+    },
+    {
+      "name": "API Documentation",
+      "url": "api-reference/introduction"
     }
   ],
   "navigation": [
