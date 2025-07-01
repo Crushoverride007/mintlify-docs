@@ -31,6 +31,12 @@
       "url": "api-reference"
     }
   ],
+  "tabs": [
+    {
+      "name": "Hetzner",
+      "url": "project-hetzner"
+    }
+  ],
   "navigation": [
     {
       "group": "Main Hub",
